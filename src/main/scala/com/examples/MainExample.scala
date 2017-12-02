@@ -1,9 +1,8 @@
 package com.examples
 
-import org.apache.spark.SparkContext
-import org.apache.spark.SparkContext._
-import org.apache.spark.SparkConf
 import org.apache.log4j.Logger
+import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.rdd.RDD
 
 object MainExample {
 
@@ -21,20 +20,14 @@ object MainExample {
 
     val conf = new SparkConf().setAppName(jobName)
     val sc = new SparkContext(conf)
+    createRDDOfNRecords(sc, 10)
 
-    val pathToFiles = arg(0)
-    val outputPath = arg(1)
-
-    logger.info("=> jobName \"" + jobName + "\"")
-    logger.info("=> pathToFiles \"" + pathToFiles + "\"")
-
-    val files = sc.textFile(pathToFiles)
-
-    // do your work here
-    val rowsWithoutSpaces = files.map(_.replaceAll(" ", ","))
-
-    // and save the result
-    rowsWithoutSpaces.saveAsTextFile(outputPath)
 
   }
+
+  def createRDDOfNRecords(sc: SparkContext, n: Int): RDD[Int] = {
+    sc.parallelize(1 to n)
+  }
+
+
 }
