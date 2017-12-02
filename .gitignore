@@ -4,4 +4,5 @@ target/*
 ./.settings/
 ./.settings/*
 .idea/
+spark-scala-maven-project.iml
 
